@@ -1,0 +1,15 @@
+certifi==2020.4.5.1
+chardet==3.0.4
+idna==2.9
+numpy==1.18.2
+pandas==1.0.3
+praw==6.5.1
+prawcore==1.0.1
+python-dateutil==2.8.1
+pytz==2019.3
+requests==2.23.0
+six==1.14.0
+timeago==1.0.13
+update-checker==0.16
+urllib3==1.25.8
+websocket-client==0.57.0

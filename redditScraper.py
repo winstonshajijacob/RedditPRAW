@@ -10,16 +10,18 @@ hot = subreddit.hot(limit=10)
 for submission in hot: 
         
     if not submission.stickied:
-        submission.comment_sort = 'best'
-        # Limit to, at most, 5 top level comments
-        submission.comment_limit = 10
+        submission.comment_sort = 'top'
+        # Limit to, at most, 10 top level comments
+        submission.comment_limit = 25
+        submission.comments.replace_more(limit=0)
         comments = submission.comments
         print(len(comments)) 
         posts.append([submission.id,submission.title,submission.author,submission.num_comments,submission.created_utc,submission.score,submission.upvote_ratio])
         for comment in comments:
-                if isinstance(comment, MoreComments):
-                        continue
+        #         if isinstance(comment, MoreComments):
+        #                 continue
                 sub_comments.append([submission.id,comment.body,comment.author,comment.created_utc,comment.score])
+
                 
 posts = pd.DataFrame(posts,columns=['id','title','author','num_comments','created_utc','score','upvote_ratio'])
 sub_comments = pd.DataFrame(sub_comments,columns=['id','body','author','created_utc','score'])

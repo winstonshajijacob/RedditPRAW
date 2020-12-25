@@ -2,3 +2,6 @@
 *praw.ini
 *.csv
 *.csv#
+cred.py
+/venv
+/Resources

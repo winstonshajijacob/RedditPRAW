@@ -1,3 +1,4 @@
+#Script for immediate img manipulation and tinkering
 # #Import required Image library
 from PIL import Image,ImageDraw,ImageFont
 import textwrap

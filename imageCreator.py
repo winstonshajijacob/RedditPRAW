@@ -12,8 +12,10 @@ def ques_img(path,i):
     img = Image.open('Resources/bg1.jpg')
     d1 = ImageDraw.Draw(img)
 
+    #placeholders
     poster_name = "winston"
     timeago = "1 hour ago"
+
     #setting y pos and text width
     y_text = 300
     text_width = 38.9
@@ -30,7 +32,7 @@ def ques_img(path,i):
     #question
     text = "You’re 78 years old, you’ve reached the end of your life and you die. Next thing you know, you’re wide awake sitting in a circle with a bunch of other people and they ask how your trip was. Would you try that drug again, why or why not?"
     text1 = "This is a question in ask reddit"
-    # d1.text((120,600),text , font=content, fill = fcolor)
+    #creates tesxt wrapping
     lines = textwrap.wrap(text, width=text_width)
 
     for line in lines:

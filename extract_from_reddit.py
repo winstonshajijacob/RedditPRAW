@@ -1,19 +1,15 @@
-import praw,psycopg2,timeago,datetime
-from praw.models import MoreComments
+import psycopg2
+import cred
 
 
-reddit = praw.Reddit('askBot')
-subreddit = reddit.subreddit('askreddit')
-posts = []
-sub_comments = []
-hot = subreddit.hot(limit=20)
+connection = psycopg2.connect(user=cred.sql_user,
+                                      password=cred.sql_password,
+                                      host=cred.sql_host,
+                                      port=cred.sql_port)
 #post and comment processing here
 
 def insertTable(parameters):
-    connection = psycopg2.connect(user="",
-                                      password="",
-                                      host="",
-                                      port="")
+    
     try:
         
         cursor = connection.cursor()
@@ -41,3 +37,7 @@ def insertTable(parameters):
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
+
+
+def read_table():
+    print("read and update")

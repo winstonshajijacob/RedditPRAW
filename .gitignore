@@ -4,4 +4,5 @@
 *.csv#
 cred.py
 /venv
-/Resources
+__pycache__/
+*.py[cod]

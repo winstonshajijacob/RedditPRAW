@@ -1,5 +1,10 @@
-import praw,timeago,datetime,pandas as pd
+import praw,timeago,datetime
 from praw.models import MoreComments
+from extract_from_reddit import insertTable
+
+
+
+#ini
 reddit = praw.Reddit('askBot')
 
 subreddit = reddit.subreddit('askreddit')
@@ -13,34 +18,26 @@ def t_ago(time):
 
     
 posts = []
-sub_comments = []
-hot = subreddit.hot(limit=10)
+p_comments = []
+hot = subreddit.hot(limit=25)
 for submission in hot: 
         
     if not submission.stickied:
         submission.comment_sort = 'top'
-        # Limit to, at most, 10 top level comments
+        # Limit to, at most, 25 top level comments,we use 25 because MoreComment Instances are counted too
         submission.comment_limit = 25
         submission.comments.replace_more(limit=0)
         comments = submission.comments
-        print(len(comments)) 
-        
-        posts.append([submission.id,submission.title,submission.author,submission.num_comments,t_ago(submission.created_utc),submission.score,submission.upvote_ratio])
+        # print(len(comments)) 
+        posts.append((str(submission.id),submission.title,submission.author.name,str(submission.num_comments),t_ago(submission.created_utc),str(submission.score),str(int(submission.upvote_ratio * 100))))
         for comment in comments:
-        #         if isinstance(comment, MoreComments):
-        #                 continue
-                sub_comments.append([submission.id,comment.body,comment.author,comment.created_utc,comment.score])
+            if len(comment.body) > 600:
+                continue
+            if comment.author is None: 
+                c_name = "deleted"
+                continue
+            c_name = str(comment.author.name)
+            p_comments.append((submission.id,comment.body,c_name,t_ago(comment.created_utc),str(comment.score),comment.id))
+insertTable(posts,p_comments)
 
 
-# posts = pd.DataFrame(posts,columns=['id','title','author','num_comments','created_utc','score','upvote_ratio'])
-# sub_comments = pd.DataFrame(sub_comments,columns=['id','body','author','created_utc','score'])
-# print("The submission id is {}.title:{},author:{},number of comments:{},created time:{},score:{},upvote ratio:{}, url : {},sticky?:{}".format(submission.id,submission.title,submission.author,submission.num_comments,submission.created_utc,submission.score,submission.upvote_ratio,submission.url,submission.stickied))
-
-# posts.to_csv("posts.csv")
-# sub_comments.to_csv("all_comments.csv")
-
-
-
-
-
-# print(posts)
